@@ -12,6 +12,7 @@ import AVFoundation
 class PlaySoundsViewController: UIViewController {
 
     var audio:AVAudioPlayer!
+    var audioPlayer2:AVAudioPlayer!
     var receivedAudio:RecordedAudio!
     var audioEngine:AVAudioEngine!
     var audioFile:AVAudioFile!
@@ -19,14 +20,6 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        //
-        //        if var filePath = NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3") {
-        //            var filePathURL = NSURL.fileURLWithPath(filePath)
-        //
-        //        } else {
-        //            println("the filePath is empty")
-        //        }
         audio = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
         audio.enableRate = true
         
@@ -38,18 +31,13 @@ class PlaySoundsViewController: UIViewController {
         var fullFilePath:String
         var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         var filePathsArray = NSFileManager.defaultManager().subpathsOfDirectoryAtPath(paths, error: nil)
-        println("files array \(filePathsArray)")
-//        while filePathsArray[0] != nil {
- //       for file in filePathsArray {
-//            fullFilePath = paths.stringByAppendingPathComponent(file)
-//            NSFileManager.defaultManager().removeItemAtPath(fullFilePath, error: nil)
-            NSFileManager.defaultManager().removeItemAtURL(receivedAudio.filePathUrl, error: nil)
-//        if receivedAudio.filePathUrl != nil {
-//            var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-//            var filename = receivedAudio.title! as String!
-//            var fullFilePath = paths.stringByAppendingPathComponent(filename)
-//            NSFileManager.defaultManager().removeItemAtPath(fullFilePath, error: nil)
-   //     }
+
+        if receivedAudio.filePathUrl != nil {
+            var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+            var filename = receivedAudio.title! as String!
+            var fullFilePath = paths.stringByAppendingPathComponent(filename)
+            NSFileManager.defaultManager().removeItemAtPath(fullFilePath, error: nil)
+        }
     }
     func startSounds() {
         audio.stop()
@@ -58,21 +46,28 @@ class PlaySoundsViewController: UIViewController {
     }
     @IBAction func stopPlaySounds(sender: UIButton) {
         audio.stop()
+        audioEngine.stop()
+        audioEngine.reset()
     }
     
     @IBAction func playSoundsQuickly(sender: UIButton) {
+        audio.stop()
+        audioEngine.stop()
+        audioEngine.reset()
         audio.rate = 1.5
         startSounds()
     }
     
     @IBAction func playSoundsSlowly(sender: UIButton) {
+        audio.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+        
         //Play audio sloooooly here...
         audio.rate = 0.5
         startSounds()
     }
     
-
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -84,6 +79,48 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func playDarthvaderAudio(sender: UIButton) {
         playAudioWithVariablePitch(-1000)
+    }
+    
+    @IBAction func echo(sender: UIButton) {
+        audio.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        var audioPlayerNode = AVAudioPlayerNode()
+        audioEngine.attachNode(audioPlayerNode)
+        
+        var echoEffect = AVAudioUnitDelay()
+        echoEffect.delayTime = 0.2
+        audioEngine.attachNode(echoEffect)
+        
+        audioEngine.connect(audioPlayerNode, to: echoEffect, format: nil)
+        audioEngine.connect(echoEffect, to: audioEngine.outputNode, format: nil)
+        
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioEngine.startAndReturnError(nil)
+        
+        audioPlayerNode.play()
+    }
+    
+    @IBAction func reverb(sender: UIButton) {
+        audio.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        var audioPlayerNode = AVAudioPlayerNode()
+        audioEngine.attachNode(audioPlayerNode)
+        
+        var reverbEffect = AVAudioUnitReverb()
+        reverbEffect.wetDryMix = 30
+        audioEngine.attachNode(reverbEffect)
+        
+        audioEngine.connect(audioPlayerNode, to: reverbEffect, format: nil)
+        audioEngine.connect(reverbEffect, to: audioEngine.outputNode, format: nil)
+        
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioEngine.startAndReturnError(nil)
+        
+        audioPlayerNode.play()
     }
     
     func playAudioWithVariablePitch(pitch: Float) {
@@ -106,16 +143,4 @@ class PlaySoundsViewController: UIViewController {
         
         audioPlayerNode.play()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -14,7 +14,6 @@
 		D94093A31AEC0E950030B65C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D94093A11AEC0E950030B65C /* LaunchScreen.xib */; };
 		D94093AF1AEC0E950030B65C /* Pitch_PerfectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94093AE1AEC0E950030B65C /* Pitch_PerfectTests.swift */; };
 		D94093B91AEC35C60030B65C /* PlaySoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94093B81AEC35C60030B65C /* PlaySoundsViewController.swift */; };
-		D94093BD1AEC4E5E0030B65C /* movie_quote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D94093BC1AEC4E5E0030B65C /* movie_quote.mp3 */; };
 		D9CB8DF01AF5355C00C0A90D /* RecordedAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB8DEF1AF5355C00C0A90D /* RecordedAudio.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +39,6 @@
 		D94093AD1AEC0E950030B65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94093AE1AEC0E950030B65C /* Pitch_PerfectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pitch_PerfectTests.swift; sourceTree = "<group>"; };
 		D94093B81AEC35C60030B65C /* PlaySoundsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySoundsViewController.swift; sourceTree = "<group>"; };
-		D94093BC1AEC4E5E0030B65C /* movie_quote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = movie_quote.mp3; sourceTree = "<group>"; };
 		D9CB8DEF1AF5355C00C0A90D /* RecordedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedAudio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,7 +63,6 @@
 		D940938A1AEC0E950030B65C = {
 			isa = PBXGroup;
 			children = (
-				D94093BC1AEC4E5E0030B65C /* movie_quote.mp3 */,
 				D94093951AEC0E950030B65C /* Pitch Perfect */,
 				D94093AB1AEC0E950030B65C /* Pitch PerfectTests */,
 				D94093941AEC0E950030B65C /* Products */,
@@ -204,7 +201,6 @@
 			files = (
 				D940939E1AEC0E950030B65C /* Main.storyboard in Resources */,
 				D94093A31AEC0E950030B65C /* LaunchScreen.xib in Resources */,
-				D94093BD1AEC4E5E0030B65C /* movie_quote.mp3 in Resources */,
 				D94093A01AEC0E950030B65C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
